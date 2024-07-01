@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.34929.205
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaystationCameraService", "PlaystationCameraService\PlaystationCameraService.csproj", "{D7E5C310-9417-44FA-886E-C847200E79B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaystationCameraService.Desktop", "PlaystationCameraService.Desktop\PlaystationCameraService.Desktop.csproj", "{FCFE25CD-C8C1-4B4D-8CCC-7771CD231522}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaystationCameraService.Loader", "PlaystationCameraService.Loader\PlaystationCameraService.Loader.csproj", "{FC5E1A7F-3277-4061-B89D-906D96FAA00B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7E5C310-9417-44FA-886E-C847200E79B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7E5C310-9417-44FA-886E-C847200E79B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7E5C310-9417-44FA-886E-C847200E79B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7E5C310-9417-44FA-886E-C847200E79B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCFE25CD-C8C1-4B4D-8CCC-7771CD231522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCFE25CD-C8C1-4B4D-8CCC-7771CD231522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCFE25CD-C8C1-4B4D-8CCC-7771CD231522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCFE25CD-C8C1-4B4D-8CCC-7771CD231522}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC5E1A7F-3277-4061-B89D-906D96FAA00B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC5E1A7F-3277-4061-B89D-906D96FAA00B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC5E1A7F-3277-4061-B89D-906D96FAA00B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC5E1A7F-3277-4061-B89D-906D96FAA00B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8F15C2BF-A395-401C-B41B-EA2DD2AFBFC8}
+	EndGlobalSection
+EndGlobal

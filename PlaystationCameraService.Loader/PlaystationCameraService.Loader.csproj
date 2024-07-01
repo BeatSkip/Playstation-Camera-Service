@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="fw_fixed.bin" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="fw_fixed.bin" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="11.1.0-rc1" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.106">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Nefarius.Drivers.WinUSB" Version="4.3.83" />
+    <PackageReference Include="System.Management" Version="9.0.0-preview.5.24306.7" />
+  </ItemGroup>
+
+</Project>
