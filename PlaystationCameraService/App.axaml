@@ -5,7 +5,6 @@
 			<TrayIcon Icon="/Assets/favicon.ico" ToolTipText="PS Camera Service">
 				<TrayIcon.Menu>
 					<NativeMenu>
-						<NativeMenuItem Header="Select Firmware" Command="{Binding ApplicationExitCommand}" />
 						<NativeMenuItem Header="Autostart at boot" ToggleType="CheckBox" IsChecked="{Binding AutoStart}" Command="{Binding ToggleAutoStartCommand}" />
 						<NativeMenuItemSeparator />
 						<NativeMenuItem Header="Exit" Command="{Binding ApplicationExitCommand}" />
