@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 using PlaystationCameraService.Loader;
+using PlaystationCameraService.Services;
 
 
 namespace PlaystationCameraService.ViewModels;
@@ -26,7 +27,7 @@ public partial class ApplicationViewModel : ObservableObject
        deviceService.Initialize();
 
         deviceService.CameraChanged += DeviceService_CameraChanged;
-        this.AutoStart = IsApplicationAddedToStartup();
+        this.AutoStart = Startup.IsInStartup();
     }
 
     private void DeviceService_CameraChanged(object? sender, CameraChangedEventArgs e)
@@ -72,49 +73,17 @@ public partial class ApplicationViewModel : ObservableObject
         this.AutoStart = !this.AutoStart;
         if (autoStart)
         {
-            AddApplicationToStartup();
+            Startup.RunOnStartup();
         }
         else
         {
-            RemoveApplicationFromStartup();
-            
+            Startup.RemoveFromStartup();
+
         }
     }
+    #endregion
 
     #region Autostart
-
-
-    public static void AddApplicationToStartup()
-    {
-
-        string assem = System.Reflection.Assembly.GetCallingAssembly().Location.Replace(".dll", ".desktop.exe");
-        using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
-        {
-            key.SetValue("Playstation Camera Service", "\"" + assem + "\"");
-        }
-
-        Debug.WriteLine($"Adding Playstation Camera Serivce as: {assem}");
-        ;
-    }
-    public static void RemoveApplicationFromStartup()
-    {
-        using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
-        {
-            key.DeleteValue("Playstation Camera Service", false);
-        }
-    }
-
-    public static bool IsApplicationAddedToStartup()
-    {
-        using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
-        {
-            object value = key.GetValue("Playstation Camera Service");
-            return value != null;
-        }
-    }
-
-
-    #endregion
 
     #endregion
 
