@@ -26,6 +26,7 @@ public partial class ApplicationViewModel : ObservableObject
        deviceService.Initialize();
 
         deviceService.CameraChanged += DeviceService_CameraChanged;
+        this.AutoStart = IsApplicationAddedToStartup();
     }
 
     private void DeviceService_CameraChanged(object? sender, CameraChangedEventArgs e)
@@ -68,7 +69,16 @@ public partial class ApplicationViewModel : ObservableObject
     [RelayCommand]
     private void ToggleAutoStart()
     {
-
+        this.AutoStart = !this.AutoStart;
+        if (autoStart)
+        {
+            AddApplicationToStartup();
+        }
+        else
+        {
+            RemoveApplicationFromStartup();
+            
+        }
     }
 
     #region Autostart
@@ -76,16 +86,30 @@ public partial class ApplicationViewModel : ObservableObject
 
     public static void AddApplicationToStartup()
     {
+
+        string assem = System.Reflection.Assembly.GetCallingAssembly().Location.Replace(".dll", ".desktop.exe");
         using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
         {
-            key.SetValue("Playstation Camera Service", "\"" + System.Reflection.Assembly.GetExecutingAssembly().Location + "\"");
+            key.SetValue("Playstation Camera Service", "\"" + assem + "\"");
         }
+
+        Debug.WriteLine($"Adding Playstation Camera Serivce as: {assem}");
+        ;
     }
     public static void RemoveApplicationFromStartup()
     {
         using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
         {
             key.DeleteValue("Playstation Camera Service", false);
+        }
+    }
+
+    public static bool IsApplicationAddedToStartup()
+    {
+        using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+        {
+            object value = key.GetValue("Playstation Camera Service");
+            return value != null;
         }
     }
 

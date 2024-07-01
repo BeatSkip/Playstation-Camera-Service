@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Management;
+using System.Reflection;
 
 namespace PlaystationCameraService.Loader;
 
 public class DeviceService
 {
     ManagementEventWatcher deviceConnectedWatcher = new ManagementEventWatcher();
-    ManagementEventWatcher cameraConnectedWatcher = new ManagementEventWatcher();
     ManagementEventWatcher deviceDisconnectedWatcher = new ManagementEventWatcher();
-    ManagementEventWatcher cameraDisconnectedWatcher = new ManagementEventWatcher();
+
 
     public event EventHandler<CameraChangedEventArgs> CameraChanged;
 
@@ -29,10 +24,11 @@ public class DeviceService
 
     public void Initialize()
     {
+
         // Query for specific USB device connections
         var queryConnected = new WqlEventQuery($"SELECT * FROM __InstanceCreationEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_PnPEntity' AND TargetInstance.ClassGuid LIKE '%{Constants.UsbDevClass}%'");
         deviceConnectedWatcher.EventArrived += new EventArrivedEventHandler(DeviceConnected);
-        deviceConnectedWatcher.Query = queryConnected;  
+        deviceConnectedWatcher.Query = queryConnected;
         deviceConnectedWatcher.Start();
 
         // Query for specific USB device disconnections
@@ -41,32 +37,34 @@ public class DeviceService
         deviceDisconnectedWatcher.Query = queryDisconnected;
         deviceDisconnectedWatcher.Start();
 
-        var queryCamConnected = new WqlEventQuery($"SELECT * FROM __InstanceCreationEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_PnPEntity' AND TargetInstance.ClassGuid LIKE '%{Constants.CamClassGuid}%'");
-        cameraConnectedWatcher.EventArrived += new EventArrivedEventHandler(CameraConnected);
-        cameraConnectedWatcher.Query = queryCamConnected;
-        cameraConnectedWatcher.Start();
+      
 
-        // Query for specific USB device disconnections
-        var queryCamDisconnected = new WqlEventQuery($"SELECT * FROM __InstanceDeletionEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_PnPEntity' AND TargetInstance.ClassGuid LIKE '%{Constants.CamClassGuid}%'");
-        deviceDisconnectedWatcher.EventArrived += new EventArrivedEventHandler(CameraDisconnected);
-        deviceDisconnectedWatcher.Query = queryCamDisconnected;
-        deviceDisconnectedWatcher.Start();
-        Debug.WriteLine($"USB Watcher initialized...");
+
+
 
         UploadToAllCameras();
     }
 
     public void Stop()
     {
+        Debug.WriteLine("Stopping DeviceService...");
         // Stop listening and clean up
-        deviceConnectedWatcher.Stop();
-        deviceDisconnectedWatcher.Stop();
-        cameraConnectedWatcher.Stop();
-        cameraDisconnectedWatcher.Stop();
-        deviceConnectedWatcher.Dispose();
-        deviceDisconnectedWatcher.Dispose();
-        cameraConnectedWatcher.Dispose();
-        cameraDisconnectedWatcher.Dispose();
+        if (deviceConnectedWatcher != null)
+        {
+            deviceConnectedWatcher.Stop();
+            deviceConnectedWatcher.EventArrived -= DeviceConnected;
+        }
+        if (deviceDisconnectedWatcher != null)
+        {
+            deviceDisconnectedWatcher.Stop();
+            deviceDisconnectedWatcher.EventArrived -= DeviceDisconnected;
+        }
+       
+
+        Debug.WriteLine($"deviceConnectedWatcher: {deviceConnectedWatcher.Query}");
+
+      
+
     }
 
     public async void UploadToAllCameras()
@@ -102,6 +100,9 @@ public class DeviceService
         Debug.WriteLine("Camera disconnected.");
         CameraChanged?.Invoke(this, CameraChangedEventArgs.Disconnected);
     }
+
+
+
 }
 
 public class CameraChangedEventArgs

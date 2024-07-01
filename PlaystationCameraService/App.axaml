@@ -1,28 +1,20 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="PlaystationCameraService.App"
-             RequestedThemeVariant="Default">
-             <TrayIcon.Icons>
-    <TrayIcons>
-      <TrayIcon Icon="/Assets/favicon.ico" 
-                ToolTipText="PS Camera Service">
-        <TrayIcon.Menu>
-          <NativeMenu>
-            <NativeMenuItem Header="Settings">
-              <NativeMenu>
-                <NativeMenuItem Header="Select Firmware" Command="{Binding ApplicationExitCommand}"/>
-                <NativeMenuItem Header="Autostart at boot"   />
-				 <NativeMenuItem ToggleType="CheckBox" IsChecked="{Binding AutoStart}" Command="{Binding ToggleAutoStartCommand}"/>
-                <NativeMenuItemSeparator />
-				  <NativeMenuItem Header="Exit" Command="{Binding ApplicationExitCommand}" />
-              </NativeMenu>
-            </NativeMenuItem>
-          </NativeMenu>
-        </TrayIcon.Menu>
-      </TrayIcon>
-    </TrayIcons>
-  </TrayIcon.Icons>
-    <Application.Styles>
-        <FluentTheme />
-    </Application.Styles>
+<?xml version="1.0" encoding="UTF-8"?>
+<Application xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="PlaystationCameraService.App" RequestedThemeVariant="Default">
+	<TrayIcon.Icons>
+		<TrayIcons>
+			<TrayIcon Icon="/Assets/favicon.ico" ToolTipText="PS Camera Service">
+				<TrayIcon.Menu>
+					<NativeMenu>
+						<NativeMenuItem Header="Select Firmware" Command="{Binding ApplicationExitCommand}" />
+						<NativeMenuItem Header="Autostart at boot" ToggleType="CheckBox" IsChecked="{Binding AutoStart}" Command="{Binding ToggleAutoStartCommand}" />
+						<NativeMenuItemSeparator />
+						<NativeMenuItem Header="Exit" Command="{Binding ApplicationExitCommand}" />
+					</NativeMenu>
+				</TrayIcon.Menu>
+			</TrayIcon>
+		</TrayIcons>
+	</TrayIcon.Icons>
+	<Application.Styles>
+		<FluentTheme />
+	</Application.Styles>
 </Application>
